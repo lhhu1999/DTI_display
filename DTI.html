@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <script>
+    function login() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // 检查用户名和密码是否匹配
+      if (username === "username" && password === "123456") {
+        window.location.href = "me.html"; // 重定向到me.html页面
+      } else {
+        alert("用户名或密码不正确");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Login</h2>
+  <form>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <input type="button" value="登录" onclick="login()">
+    </div>
+  </form>
+</body>
+</html>
