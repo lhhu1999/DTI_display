@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <title>动态显示按钮</title>
+  <script src="https://unpkg.com/@rdkit/rdkit/dist/RDKit_minimal.js"></script>
+  <script>
+    window
+      .initRDKitModule()
+      .then(function (RDKit) {
+        console.log("RDKit version: " + RDKit.version());
+        window.RDKit = RDKit;
+        /**
+         * The RDKit module is now loaded.
+         * You can use it anywhere.
+         */
+      })
+      .catch(() => {
+        // handle loading errors here...
+      });
+    </script>
+    <style>
+        #canvas-container{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smiles</h1>
+    <form>
+        <label for="smiles-input">Enter Smiles</label>
+        <input type="text" id="smiles-input" name="smiles"><br><br>
+        <input type="button" value="Draw Molecule" onclick="drawMolecule()">
+    </form>
+    <br>
+    <div id="example-1-output"></div>
+    <div id="canvas-container">
+        <canvas id="canvas-4" width="250" height="200"></canvas>
+        <canvas id="canvas-5" width="250" height="200"></canvas>
+    </div>
+    <script>
+        function drawMolecule(){
+            var smiles = "CC(=O)Oc1ccccc1C(=O)O"
+            var mol2 = RDKit.get_mol(smiles);
+            var mdetails = {}
+            mdetails['atoms'] = [0,1,10];
+            mdetails['explicitMethyl'] = true;
+            mdetails['addAtomIndices'] = true;
+            mdetails['legend'] = smiles;
+            var canvas = document.getElementById("canvas-4");
+            mol2.draw_to_canvas_with_highlights(canvas, JSON.stringify(mdetails));
+
+            var smiles2 = document.getElementById("smiles-input").value;
+            var mol = RDKit.get_mol(smiles2);
+            var mdetails2 = {}
+            mdetails2['atoms'] = [];
+            mdetails2['explicitMethyl'] = true;
+            mdetails2['addAtomIndices'] = true;
+            mdetails2['legend'] = smiles2;
+            var canvas2 = document.getElementById("canvas-5");
+            mol.draw_to_canvas_with_highlights(canvas2, JSON.stringify(mdetails2));
+
+        }
+    </script>
+</body>
